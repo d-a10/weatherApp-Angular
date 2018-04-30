@@ -1,8 +1,3 @@
-import {WeatherItem} from './weather-item';
-export const WEATHER_ITEMS: WeatherItem[] = [
-   new WeatherItem('London', 'RAINY', 6),
-   new WeatherItem('New York', 'SUNNY', 14),
-   new WeatherItem('Austin', 'SUNNY', 52),
-   new WeatherItem('Paris', 'CLOUDY', 65)   
-];
+import {WeatherItem} from './weather-item'; 
+export const WEATHER_ITEMS: WeatherItem[] = [];
 

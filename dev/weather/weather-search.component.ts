@@ -6,7 +6,10 @@ import {WeatherItem} from './weather-item';
 import {WEATHER_ITEMS} from './weather.data';
 import {WeatherService} from './weather.service';
 import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { Subject } from 'rxjs/Subject';
+import { OnInit } from '@angular/core';
+import { switchMap } from 'rxjs/operators/switchMap';
+import { debounceTime } from 'rxjs/operators/debounceTime';
 
 @Component({
    selector: 'my-weather-search',
@@ -15,8 +18,10 @@ import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule, F
    providers: [WeatherService]
 })
 
-export class WeatherSearchComponent {
+export class WeatherSearchComponent implements OnInit {
    sForm: FormGroup;
+   private searchStream = new Subject<string>();
+   data: any = {};
    constructor(private _weatherService: WeatherService){
      
      this.sForm = new FormGroup({
@@ -25,15 +30,21 @@ export class WeatherSearchComponent {
    }
    
    onSubmit() {
-     console.log('onSubmit');
-     alert('formvalLocation' + this.sForm.value.location);
-      this._weatherService.searchWeatherData(this.sForm.value.location)
-      .subscribe(
-         data => {
-            const weatherItem = new WeatherItem(
-            data.name, data.weather[0].description, data.main.temp);
-            this._weatherService.addWeatherItem(weatherItem);
-         }
-      );
+      const weatherItem = new WeatherItem(
+      this.data.name, this.data.weather[0].description, this.data.main.temp);
+      this._weatherService.addWeatherItem(weatherItem);
    }
-}
+  
+  onSearchLocation(cityName: string){
+    this.searchStream
+    .next(cityName);
+  }
+  
+  ngOnInit(){
+    this.searchStream
+    .pipe(switchMap((input: string) => this._weatherService.searchWeatherData(input)))
+    .subscribe(
+      data => this.data = data
+    );
+  }
+} 

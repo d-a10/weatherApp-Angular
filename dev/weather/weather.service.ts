@@ -18,16 +18,15 @@ export class WeatherService {
    }
   
    addWeatherItem(weatherItem: WeatherItem){
-     alert('weather item: ' + weatherItem);
       WEATHER_ITEMS.push(weatherItem);
    }
+  
+  clearWeatherItems() {
+    WEATHER_ITEMS.splice(0);
+  }
    
    searchWeatherData(cityName: string): Observable<any>{
       return this._http
-        .get(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=a9886e11c14fc0c948035507f926527c&units=imperial`)
-      .catch(error => {
-         console.error(error);
-         return Observable.throw(error.json())
-      });
+        .get(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=a9886e11c14fc0c948035507f926527c&units=imperial`);
    }
 }

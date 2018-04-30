@@ -1,10 +1,10 @@
 <section class="weather-search">
    <form [formGroup]="sForm" (ngSubmit)="onSubmit()">
       <label for="location">City</label>
-      <input class="form-control" formControlName="location" type="text" id='location' required>
+      <input class="form-control" formControlName="location" (input)="onSearchLocation(input.value)" type="text" id='location' required #input>
       <button type='submit' >Add City</button>
    </form>
    <div>
-      <span class='info'>City found:</span> City Name
+      <span class='info'>City found:</span> {{data.name}}
    </div>
 </section>
