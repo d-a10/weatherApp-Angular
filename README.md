@@ -6,7 +6,7 @@ Created with: <b>Angular 5</b><br>
 <br>
 Known bug:<br>
 
-Currently a city must be pasted in at once into the search bar else the app with cease to work. This will be addressed much farther down the line as this app not currently a priority.<br>
+Currently a city must be pasted in at once into the search bar else the app with cease to work. This will be addressed much further down the line as this app not currently a priority.<br>
 
 ## Development server
 
